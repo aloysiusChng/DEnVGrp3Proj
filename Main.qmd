@@ -1,10 +1,40 @@
 ---
 Title: "AAI1001 Data Engineering and Visualization Group 3 Project"
 Author: "Group 3"
-
-
+embed-resources: true
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+editor: 
+  markdown: 
+    wrap: 72
 ---
-# Load Libraries
-```{r}
 
+<font size="6"> **Team Project Proposal** </font>
+
+**Authors:** - **Muhammad Azreen Bin Muhammad**
+
+For this document, the following packages are required:
+
+```{r}
+#| label: setup 
+#| include: true
+library(DBI)
+library(knitr)
 ```
+
+# Original Data Visualization in News Media
+
+
+# Critical Assessment of the Original Visualization
+
+
+# Proposed Improvements
+
+We propose to address the shortcomings of the original visualization as follows:
+
+# Data Cleaning
