@@ -29,22 +29,54 @@ library(knitr)
 
 # Original Data Visualization in News Media
 
-The geographical distribution of Singapore's population is a focal point of urban studies and public policy discussions. The introduction of a new visualization of demographic trends across various planning areas provides a novel perspective on this discourse. Our project aims to dissect the relationship between demographic characteristics and urban planning policies. The observed patterns, while not entirely random, may be consistent with hypotheses regarding the impact of strategic urban development on population distribution.
+The geographical distribution of Singapore's population is a focal point
+of urban studies and public policy discussions. The introduction of a
+new visualization of demographic trends across various planning areas
+provides a novel perspective on this discourse. Our project aims to
+dissect the relationship between demographic characteristics and urban
+planning policies. The observed patterns, while not entirely random, may
+be consistent with hypotheses regarding the impact of strategic urban
+development on population distribution.
 
-Our visualization, inspired by the seminal work of the Singapore Department of Statistics (2023), encapsulates data from the year 2023, a period marked by significant urban and demographic changes. While our initial rendition has been commended for its clarity in showcasing trends, it is the addition of interactive elements (as showcased in Figure 1) that promises a deeper engagement with the data. Nonetheless, we acknowledge room for improvement. Incorporating interactive toggles, expanded temporal ranges, and detailed geospatial mappings will refine our approach, providing a more comprehensive exploration of how urban planning influences demographic distribution and housing patterns in Singapore.
-(https://www.singstat.gov.sg/-/media/files/publications/population/population2023.pdf) Rough Draft will change later
-# Critical Assessment of the Original Visualization
-Insert the fluff later
+Our visualization, inspired by the seminal work of the Singapore
+Department of Statistics (2023), encapsulates data from the year 2023, a
+period marked by significant urban and demographic changes. While our
+initial rendition has been commended for its clarity in showcasing
+trends, it is the addition of interactive elements (as showcased in
+Figure 1) that promises a deeper engagement with the data. Nonetheless,
+we acknowledge room for improvement. Incorporating interactive toggles,
+expanded temporal ranges, and detailed geospatial mappings will refine
+our approach, providing a more comprehensive exploration of how urban
+planning influences demographic distribution and housing patterns in
+Singapore.
+(https://www.singstat.gov.sg/-/media/files/publications/population/population2023.pdf)
+Rough Draft will change later \# Critical Assessment of the Original
+Visualization Insert the fluff later
 
 However, there are some shortcomings the team has identified:
-Complexity: While the visualization is thorough, its complexity may be overwhelming for some users, especially those unfamiliar with demographic data or geographical information systems (GIS).
 
-Data Density: The high density of information in a single visualization can lead to cognitive overload, where important details might be overlooked due to the sheer volume of data presented.
+1.  Complexity: While the visualization is thorough, its complexity may
+    be overwhelming for some users, especially those unfamiliar with
+    demographic data or geographical information systems (GIS).
 
-Accessibility: The reliance on color and detailed graphics may
+2.  Accessibility: The reliance on color and detailed graphics may pose
+    accessibility challenges for users with visual impairments or those
+    who are not tech-savvy
+
+3.  Data Density: The high density of information in a single
+    visualization can lead to cognitive overload, where important
+    details might be overlooked due to the sheer volume of data
+    presented.
+
+4.  
+
+5.  
+
+6.  
 
 # Proposed Improvements
 
-We propose to address the shortcomings of the original visualization as follows:
+We propose to address the shortcomings of the original visualization as
+follows:
 
 # Data Cleaning
