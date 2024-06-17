@@ -50,8 +50,20 @@ our approach, providing a more comprehensive exploration of how urban
 planning influences demographic distribution and housing patterns in
 Singapore.
 (https://www.singstat.gov.sg/-/media/files/publications/population/population2023.pdf)
-Rough Draft will change later \# Critical Assessment of the Original
-Visualization Insert the fluff later
+\# Critical Assessment of the Original The selected visualization from
+the Singapore Department of Statistics presents several variables:
+population distribution (quantitative), age profile (quantitative),
+housing types (categorical), and planning areas (categorical).
+Additionally, the visualization includes interactive elements that allow
+users to delve into specific data points, enhancing the engagement and
+depth of analysis.
+
+The plot utilizes a combination of charts and maps to effectively
+communicate the demographic and housing trends across different planning
+areas. The clarity and detail of the data presentation have been
+commended, as it allows users to easily identify and understand the
+trends. The use of interactivity, such as hovering over data points for
+more information, adds a layer of depth that static visualizations lack.
 
 However, there are some shortcomings the team has identified:
 
@@ -68,11 +80,13 @@ However, there are some shortcomings the team has identified:
     details might be overlooked due to the sheer volume of data
     presented.
 
-4.  
+4.  Limited Temporal Range: The visualization only covers data for the
+    year 2023, which constrains the analysis to a narrow timeframe and
+    does not allow for the examination of trends over time.
 
-5.  
+5.   Users cannot customize the time range or select specific years of interest, limiting the depth of their analysis.
 
-6.  
+6.  While some elements are interactive, the visualization could benefit from more dynamic features such as changing bubble sizes or color gradients to depict demographic shifts over time.
 
 # Proposed Improvements
 
