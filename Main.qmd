@@ -84,9 +84,12 @@ However, there are some shortcomings the team has identified:
     year 2023, which constrains the analysis to a narrow timeframe and
     does not allow for the examination of trends over time.
 
-5.   Users cannot customize the time range or select specific years of interest, limiting the depth of their analysis.
+5.  Lack of Customization: Users cannot customize the time range or select specific years of
+    interest, limiting the depth of their analysis.
 
-6.  While some elements are interactive, the visualization could benefit from more dynamic features such as changing bubble sizes or color gradients to depict demographic shifts over time.
+6.  Static Elements: While some elements are interactive, the visualization could benefit
+    from more dynamic features such as changing bubble sizes or color
+    gradients to depict demographic shifts over time.
 
 # Proposed Improvements
 
