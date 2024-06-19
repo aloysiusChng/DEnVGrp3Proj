@@ -96,15 +96,12 @@ However, there are some shortcomings the team has identified:
 We propose to address the shortcomings of the original visualization as
 follows:
 
-1.  Better contrast: Contrast of colours can help improve accessibility for
-    users with visual impairments.
+1.  Better contrast: Utilize high-contrast colors to improve accessibility for users with visual impairments, ensuring clarity and ease of interpretation for all users.
 
-2.  Reduced Data Density 
+2.  Reduced Data Density: Simplify the presentation by reducing the number of data points displayed simultaneously, thus preventing overcrowding and making the visualization more comprehensible.
 
-3.  Interactive Elements: Incorporating interactive toggles, expanded temporal ranges, and detailed geospatial mappings will refine our approach, providing a more comprehensive exploration of how urban planning influences demographic distribution and housing patterns in Singapore.
+3.  Interactive Elements: Hovering over a country will display a tooltip with detailed information on the population size of a certain region of singapore as well the age profile.
 
-4.  Wider Temporal Range and cztomization: The visualization only covers data for the
-    year 2023, which constrains the analysis to a narrow timeframe and
-    does not allow for the examination of trends over time.
+4.  Expanded Temporal Ranges: Introduce options for users to select specific time periods for analysis, facilitating a deeper exploration of trends over time.
 
 # Data Cleaning
