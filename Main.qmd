@@ -50,7 +50,7 @@ our approach, providing a more comprehensive exploration of how urban
 planning influences demographic distribution and housing patterns in
 Singapore.
 (https://www.singstat.gov.sg/-/media/files/publications/population/population2023.pdf)
-\# Critical Assessment of the Original The selected visualization from
+# Critical Assessment of the Original The selected visualization from
 the Singapore Department of Statistics presents several variables:
 population distribution (quantitative), age profile (quantitative),
 housing types (categorical), and planning areas (categorical).
