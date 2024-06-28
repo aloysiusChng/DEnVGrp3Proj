@@ -51,7 +51,7 @@ planning influences demographic distribution and housing patterns in
 Singapore.
 
 # Critical Assessment of the Original The selected visualization from
-the Singapore Department of Statistics presents several variables:
+The Singapore Department of Statistics presents several variables:
 population distribution (quantitative), age profile (quantitative),
 housing types (categorical), and planning areas (categorical).
 Additionally, the visualization includes interactive elements that allow
@@ -105,3 +105,31 @@ follows:
 4.  Expanded Temporal Ranges: Introduce options for users to select specific time periods for analysis, facilitating a deeper exploration of trends over time.
 
 # Data Cleaning
+
+The Singapore Department of Statistics based its visualization on data collected by the Singapore Government from the year 2023 available in CSV format. The data includes the following columns: Planning Area, Population, Age Profile, and Gender. For our improved visualization we will be using dataset dating as far back as 2000 to 2023. The department of statistics categorize the data into a range of 10 years (e.g 2000-2010,2011-2020) and for data set that have not met the 10 year range are given in seperate files instead. As such we will first have to combined the data into a single file and then clean the data to ensure that it is in a Dataframe.
+
+Insert code to read the data from the CSV files and combine them into a single dataframe.
+
+```{r}
+
+```
+
+Once the data has been combined, we will peform a summary of the data using the glimpse() ans summary() function to understand the structure of the data and identify any missing values or inconsistencies.
+
+```{r}
+
+```
+
+The relevant columns that we will be using are as follows:
+
+-
+-
+-
+
+As we are only interested in providing state level data that is easy to read for ordinary users, we will be filtering out the data that is not relevant to our visualization. For instance
+
+
+# Conclusion
+
+The data is now ready for visualization. The next step will be to create a plot that can effectively communicate the relationship between the population density in each region of singapore over time, and additionally allow curious readers to explore the data even further using interactivity. We will use ggplot2 package to create the plot, and plotly to add interactivity. 
+
