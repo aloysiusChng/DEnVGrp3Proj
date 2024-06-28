@@ -25,6 +25,9 @@ For this document, the following packages are required:
 #| include: true
 library(DBI)
 library(knitr)
+library(readxl)
+library(tidyverse)
+
 ```
 
 # Original Data Visualization in News Media
@@ -112,12 +115,54 @@ Insert code to read the data from the CSV files and combine them into a single d
 
 ```{r}
 
+
 ```
 
-Once the data has been combined, we will peform a summary of the data using the glimpse() ans summary() function to understand the structure of the data and identify any missing values or inconsistencies.
+Once the data has been combined, we will perform a summary of the data using the glimpse() and summary() function to understand the structure of the data and identify any missing values or inconsistencies.
 
 ```{r}
+# Reading csv file
+df <- read.csv("data/combined_data.csv")
+# Deleting "SZ" and "Sex" columns
+df <- df %>% select(-"SZ", -"Sex")
+# Function to create age groups from 1,2,3,4... to 1-9, 10,19...
+create_age_group <- function(age) {
+  if (age == "90_and_over" || age == "90_and_Over") {
+    return("90 and Over")
+  } else {
+    age_num <- as.numeric(age)
+    group_start <- (age_num %/% 10) * 10
+    group_end <- group_start + 9
+    return(paste0(group_start, " to ", group_end))
+  }
+}
+# Mutating the age column into a new AgeGroup column
+df <- df %>% mutate(AgeGroup = sapply(Age, create_age_group))
 
+head(df)
+
+```
+```{r}
+# Function to clean the 'Pop' column by removing non-numeric characters
+clean_pop <- function(pop) {
+  # Remove any non-digit characters
+  clean_pop <- gsub("[^0-9]", "", pop)
+  return(clean_pop)
+}
+# Apply the cleaning function to the 'Pop' column
+df$Pop <- sapply(df$Pop, clean_pop)
+# Convert Pop to numeric for aggregation
+df$Pop <- as.numeric(df$Pop)
+# Move columns to a new data frame to consolidate total population, Age Group and Time
+aggregated_df <- df %>%
+  group_by(PA, AgeGroup, Time) %>%
+  summarise(TotalPop = sum(Pop, na.rm = TRUE))
+
+head(aggregated_df)
+```
+```{r}
+# For testing
+write_csv(aggregated_df, "test.csv")
 ```
 
 The relevant columns that we will be using are as follows:
