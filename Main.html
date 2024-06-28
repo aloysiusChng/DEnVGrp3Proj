@@ -3079,6 +3079,7 @@ vertical-align: -.125em;
   <li><a href="#critical-assessment-of-the-original-the-selected-visualization-from" id="toc-critical-assessment-of-the-original-the-selected-visualization-from" class="nav-link" data-scroll-target="#critical-assessment-of-the-original-the-selected-visualization-from"><span class="header-section-number">2</span> Critical Assessment of the Original The selected visualization from</a></li>
   <li><a href="#proposed-improvements" id="toc-proposed-improvements" class="nav-link" data-scroll-target="#proposed-improvements"><span class="header-section-number">3</span> Proposed Improvements</a></li>
   <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning"><span class="header-section-number">4</span> Data Cleaning</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
   </ul>
 </nav>
 </div>
@@ -3103,7 +3104,7 @@ vertical-align: -.125em;
 </section>
 <section id="critical-assessment-of-the-original-the-selected-visualization-from" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Critical Assessment of the Original The selected visualization from</h1>
-<p>the Singapore Department of Statistics presents several variables: population distribution (quantitative), age profile (quantitative), housing types (categorical), and planning areas (categorical). Additionally, the visualization includes interactive elements that allow users to delve into specific data points, enhancing the engagement and depth of analysis.</p>
+<p>The Singapore Department of Statistics presents several variables: population distribution (quantitative), age profile (quantitative), housing types (categorical), and planning areas (categorical). Additionally, the visualization includes interactive elements that allow users to delve into specific data points, enhancing the engagement and depth of analysis.</p>
 <p>The plot utilizes a combination of charts and maps to effectively communicate the demographic and housing trends across different planning areas. The clarity and detail of the data presentation have been commended, as it allows users to easily identify and understand the trends. The use of interactivity, such as hovering over data points for more information, adds a layer of depth that static visualizations lack.</p>
 <p>However, there are some shortcomings the team has identified:</p>
 <ol type="1">
@@ -3119,14 +3120,28 @@ vertical-align: -.125em;
 <h1 data-number="3"><span class="header-section-number">3</span> Proposed Improvements</h1>
 <p>We propose to address the shortcomings of the original visualization as follows:</p>
 <ol type="1">
-<li><p>Better contrast: Contrast of colours can help improve accessibility for users with visual impairments.</p></li>
-<li><p>Reduced Data Density</p></li>
-<li><p>Interactive Elements: Incorporating interactive toggles, expanded temporal ranges, and detailed geospatial mappings will refine our approach, providing a more comprehensive exploration of how urban planning influences demographic distribution and housing patterns in Singapore.</p></li>
-<li><p>Wider Temporal Range and cztomization: The visualization only covers data for the year 2023, which constrains the analysis to a narrow timeframe and does not allow for the examination of trends over time.</p></li>
+<li><p>Better contrast: Utilize high-contrast colors to improve accessibility for users with visual impairments, ensuring clarity and ease of interpretation for all users.</p></li>
+<li><p>Reduced Data Density: Simplify the presentation by reducing the number of data points displayed simultaneously, thus preventing overcrowding and making the visualization more comprehensible.</p></li>
+<li><p>Interactive Elements: Hovering over a country will display a tooltip with detailed information on the population size of a certain region of singapore as well the age profile.</p></li>
+<li><p>Expanded Temporal Ranges: Introduce options for users to select specific time periods for analysis, facilitating a deeper exploration of trends over time.</p></li>
 </ol>
 </section>
 <section id="data-cleaning" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Data Cleaning</h1>
+<p>The Singapore Department of Statistics based its visualization on data collected by the Singapore Government from the year 2023 available in CSV format. The data includes the following columns: Planning Area, Population, Age Profile, and Gender. For our improved visualization we will be using dataset dating as far back as 2000 to 2023. The department of statistics categorize the data into a range of 10 years (e.g 2000-2010,2011-2020) and for data set that have not met the 10 year range are given in seperate files instead. As such we will first have to combined the data into a single file and then clean the data to ensure that it is in a Dataframe.</p>
+<p>Insert code to read the data from the CSV files and combine them into a single dataframe.</p>
+<p>Once the data has been combined, we will peform a summary of the data using the glimpse() ans summary() function to understand the structure of the data and identify any missing values or inconsistencies.</p>
+<p>The relevant columns that we will be using are as follows:</p>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<p>As we are only interested in providing state level data that is easy to read for ordinary users, we will be filtering out the data that is not relevant to our visualization. For instance</p>
+</section>
+<section id="conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<p>The data is now ready for visualization. The next step will be to create a plot that can effectively communicate the relationship between the population density in each region of singapore over time, and additionally allow curious readers to explore the data even further using interactivity. We will use ggplot2 package to create the plot, and plotly to add interactivity.</p>
 </section>
 
 </main>
