@@ -114,6 +114,17 @@ The Singapore Department of Statistics based its visualization on data collected
 Insert code to read the data from the CSV files and combine them into a single dataframe.
 
 ```{r}
+setwd("C:/Users/benfu/data_vis/DEnVGrp3Proj/data")
+
+# List all CSV files in the directory
+file_list <- list.files(pattern = "*.csv")
+
+# Read and combine all CSV files
+csv_list <- lapply(file_list, read.csv)
+combined_data <- do.call(rbind, csv_list)
+
+# Save the combined data frame to a new CSV file (optional)
+write.csv(combined_data, "combined_data.csv", row.names = FALSE)
 
 
 ```
