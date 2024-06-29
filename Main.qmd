@@ -27,6 +27,9 @@ library(DBI)
 library(knitr)
 library(readxl)
 library(tidyverse)
+library(here)
+library(readr)
+library(dplyr)
 
 ```
 
@@ -114,26 +117,26 @@ The Singapore Department of Statistics based its visualization on data collected
 Insert code to read the data from the CSV files and combine them into a single dataframe.
 
 ```{r}
-setwd("C:/Users/benfu/data_vis/DEnVGrp3Proj/data")
+# Set the working directory to the root of the project folder
+setwd(here::here())
 
-# List all CSV files in the directory
-file_list <- list.files(pattern = "*.csv")
+# List all CSV files in the data folder
+file_list <- list.files("data", pattern = "*.csv")
 
 # Read and combine all CSV files
-csv_list <- lapply(file_list, read.csv)
-combined_data <- do.call(rbind, csv_list)
+csv_list <- lapply(file_list, function(x) read.csv(file.path("data", x)))
+df <- do.call(rbind, csv_list)
 
-# Save the combined data frame to a new CSV file (optional)
-write.csv(combined_data, "combined_data.csv", row.names = FALSE)
+glimpse(df)
 
-
+# Save the combined data frame to a new CSV file (optional if you want to view it before we start cleaning) 
+# write.csv(df, file.path("data", "combined_data.csv"), row.names = FALSE)
 ```
 
 Once the data has been combined, we will perform a summary of the data using the glimpse() and summary() function to understand the structure of the data and identify any missing values or inconsistencies.
 
 ```{r}
-# Reading csv file
-df <- read.csv("data/combined_data.csv")
+
 # Deleting "SZ" and "Sex" columns
 df <- df %>% select(-"SZ", -"Sex")
 # Function to create age groups from 1,2,3,4... to 1-9, 10,19...
