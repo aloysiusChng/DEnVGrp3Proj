@@ -23,14 +23,10 @@ For this document, the following packages are required:
 ```{r}
 #| label: setup 
 #| include: true
-library(DBI)
 library(knitr)
 library(readxl)
 library(tidyverse)
 library(here)
-library(readr)
-library(dplyr)
-
 ```
 
 # Original Data Visualization in News Media
@@ -42,34 +38,37 @@ provides a novel perspective on this discourse. Our project aims to
 dissect the relationship between demographic characteristics and urban
 planning policies. The observed patterns, while not entirely random, may
 be consistent with hypotheses regarding the impact of strategic urban
-development on population distribution.
+development on population distribution as seen in @fig-1.
 
 Our visualization, inspired by the seminal work of the Singapore
-Department of Statistics (2023), encapsulates data from the year 2023, a
-period marked by significant urban and demographic changes. While our
-initial rendition has been commended for its clarity in showcasing
-trends, it is the addition of interactive elements (as showcased in
-Figure 1) that promises a deeper engagement with the data. Nonetheless,
-we acknowledge room for improvement. Incorporating interactive toggles,
-expanded temporal ranges, and detailed geospatial mappings will refine
-our approach, providing a more comprehensive exploration of how urban
-planning influences demographic distribution and housing patterns in
-Singapore.
+Department of Statistics
+([2023](https://www.singstat.gov.sg/publications/population/population-trends)),
+encapsulates data from the year 2023, a period marked by significant
+urban and demographic changes. While our initial rendition has been
+commended for its clarity in showcasing trends, it is the addition of
+interactive elements that promises a deeper engagement with the data.
+Nonetheless, we acknowledge room for improvement. Incorporating
+interactive toggles, expanded temporal ranges, and detailed geospatial
+mappings will refine our approach, providing a more comprehensive
+exploration of how urban planning influences demographic distribution
+and housing patterns in Singapore.
+
+![Figure 1: Visualization of Choropleth Map of Resident Population
+Density by the Department of Statistics Singapore ([Singstat
+2023](https://www.singstat.gov.sg/publications/population/population-trends))](Images/Figure1.png){#fig-1}
 
 # Critical Assessment of the Original The selected visualization from
-The Singapore Department of Statistics presents several variables:
-population distribution (quantitative), age profile (quantitative),
-housing types (categorical), and planning areas (categorical).
-Additionally, the visualization includes interactive elements that allow
-users to delve into specific data points, enhancing the engagement and
-depth of analysis.
 
-The plot utilizes a combination of charts and maps to effectively
-communicate the demographic and housing trends across different planning
-areas. The clarity and detail of the data presentation have been
-commended, as it allows users to easily identify and understand the
-trends. The use of interactivity, such as hovering over data points for
-more information, adds a layer of depth that static visualizations lack.
+The Singapore Department of Statistics presents several variables:
+population distribution (quantitative) and planning areas (categorical).
+Additionally, the visualization includes a heatmap that allow users to
+delve into subzones to see pattern in land development and population
+over time.
+
+The clarity and detail of the data presentation have been commended, as
+it allows users to easily identify and understand the trends. The use of
+interactivity, such as hovering over data points for more information,
+adds a layer of depth that static visualizations lack.
 
 However, there are some shortcomings the team has identified:
 
@@ -84,37 +83,57 @@ However, there are some shortcomings the team has identified:
 3.  Data Density: The high density of information in a single
     visualization can lead to cognitive overload, where important
     details might be overlooked due to the sheer volume of data
-    presented.
+    presented.([Front Psychol. 2023](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/))
 
 4.  Limited Temporal Range: The visualization only covers data for the
     year 2023, which constrains the analysis to a narrow timeframe and
     does not allow for the examination of trends over time.
 
-5.  Lack of Customization: Users cannot customize the time range or select specific years of
-    interest, limiting the depth of their analysis.
+5.  Lack of Customization: Users cannot customize the time range or
+    select specific years of interest, limiting the depth of their
+    analysis.
 
-6.  Static Elements: While some elements are interactive, the visualization could benefit
-    from more dynamic features such as changing bubble sizes or color
-    gradients to depict demographic shifts over time.
+6.  Static Elements: While some elements are interactive, the
+    visualization could benefit from more dynamic features such as
+    changing bubble sizes or color gradients to depict demographic
+    shifts over time.
 
 # Proposed Improvements
 
 We propose to address the shortcomings of the original visualization as
 follows:
 
-1.  Better contrast: Utilize high-contrast colors to improve accessibility for users with visual impairments, ensuring clarity and ease of interpretation for all users.
+1.  Better contrast: Utilize high-contrast colors to improve
+    accessibility for users with visual impairments, ensuring clarity
+    and ease of interpretation for all users. One such example is the
+    use of Color Universal Design (CUD) colors which are designed to be
+    distinguishable by all users, including those with color vision
+    deficiencies.([Okabe and Ito 2008](https://jfly.uni-koeln.de/color/))
 
-2.  Reduced Data Density: Simplify the presentation by reducing the number of data points displayed simultaneously, thus preventing overcrowding and making the visualization more comprehensible.
+2.  Reduced Data Density: Simplify the presentation by reducing the
+    number of data points displayed simultaneously, thus preventing
+    overcrowding and making the visualization more comprehensible.
 
-3.  Interactive Elements: Hovering over a country will display a tooltip with detailed information on the population size of a certain region of singapore as well the age profile.
+3.  Interactive Elements: Hovering over a country will display a tooltip
+    with detailed information on the population size of a certain region
+    of singapore as well the age profile.
 
-4.  Expanded Temporal Ranges: Introduce options for users to select specific time periods for analysis, facilitating a deeper exploration of trends over time.
+4.  Expanded Temporal Ranges: Introduce options for users to select
+    specific time periods for analysis, facilitating a deeper
+    exploration of trends over time.
 
 # Data Cleaning
 
-The Singapore Department of Statistics based its visualization on data collected by the Singapore Government from the year 2023 available in CSV format. The data includes the following columns: Planning Area, Population, Age Profile, and Gender. For our improved visualization we will be using dataset dating as far back as 2000 to 2023. The department of statistics categorize the data into a range of 10 years (e.g 2000-2010,2011-2020) and for data set that have not met the 10 year range are given in seperate files instead. As such we will first have to combined the data into a single file and then clean the data to ensure that it is in a Dataframe.
-
-Insert code to read the data from the CSV files and combine them into a single dataframe.
+The Singapore Department of Statistics based its visualization on data
+collected by the Singapore Government from the year 2023 available in
+CSV format. The data includes the following columns: Planning Area,
+Population, Age Profile, and Gender. For our improved visualization we
+will be using dataset dating as far back as 2000 to 2023. The department
+of statistics categorize the data into a range of 10 years (e.g
+2000-2010,2011-2020) and for data set that have not met the 10 year
+range are given in seperate files instead. As such we will first have to
+combined the data into a single file and then clean the data to ensure
+that it is in a Dataframe.
 
 ```{r}
 # Set the working directory to the root of the project folder
@@ -127,17 +146,29 @@ file_list <- list.files("data", pattern = "*.csv")
 csv_list <- lapply(file_list, function(x) read.csv(file.path("data", x)))
 df <- do.call(rbind, csv_list)
 
-glimpse(df)
-
 # Save the combined data frame to a new CSV file (optional if you want to view it before we start cleaning) 
 # write.csv(df, file.path("data", "combined_data.csv"), row.names = FALSE)
 ```
 
-Once the data has been combined, we will perform a summary of the data using the glimpse() and summary() function to understand the structure of the data and identify any missing values or inconsistencies.
+Once the data has been combined, we will perform a summary of the data
+using the glimpse() and tail() function to understand the structure of
+the data and identify any missing values or inconsistencies.
 
 ```{r}
+# Display the first few rows of the combined data frame
+glimpse(df)
+# Display the last few rows of the combined data frame
+tail(df)
+```
 
-# Deleting "SZ" and "Sex" columns
+Based on the data type and structure, we will remove the columns that
+are not relevant to our visualization and clean the remaining columns to
+ensure consistency and accuracy. We will also aggregate the data to
+create a new data frame that consolidates the total population by age
+group, planning area, and time period.
+
+```{r}
+# Deleting "SZ" and "Sex" columns as they are not relevant to our visualization
 df <- df %>% select(-"SZ", -"Sex")
 # Function to create age groups from 1,2,3,4... to 1-9, 10,19...
 create_age_group <- function(age) {
@@ -156,6 +187,14 @@ df <- df %>% mutate(AgeGroup = sapply(Age, create_age_group))
 head(df)
 
 ```
+
+Next, we will clean the 'Pop' and by removing any non-numeric characters
+and convert it to a numeric data type for aggregation to make the
+dataframe more memory efficient as having char data type for these
+columns can take up alot of memory usage which can hamper the work flow.
+Afterwards we will then aggregate the data to calculate the total
+population by age group, planning area, and time period.
+
 ```{r}
 # Function to clean the 'Pop' column by removing non-numeric characters
 clean_pop <- function(pop) {
@@ -174,21 +213,25 @@ aggregated_df <- df %>%
 
 head(aggregated_df)
 ```
+
+We can save the cleaned data to a new CSV file for future use.
+
 ```{r}
-# For testing
+# Saved for future use
 write_csv(aggregated_df, "test.csv")
 ```
 
-The relevant columns that we will be using are as follows:
-
--
--
--
-
-As we are only interested in providing state level data that is easy to read for ordinary users, we will be filtering out the data that is not relevant to our visualization. For instance
-
-
 # Conclusion
 
-The data is now ready for visualization. The next step will be to create a plot that can effectively communicate the relationship between the population density in each region of singapore over time, and additionally allow curious readers to explore the data even further using interactivity. We will use ggplot2 package to create the plot, and plotly to add interactivity. 
+The data is now ready for visualization. The next step will be to create
+a plot that can effectively communicate the relationship between the
+population density in each region of Singapore over time, and
+additionally allow curious readers to explore the data even further
+using interactivity. We will use ggplot2 package to create the plot, and
+plotly to add interactivity.
 
+# References
+
+https://www.singstat.gov.sg/publications/population/population-trends
+https://jfly.uni-koeln.de/color/
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
