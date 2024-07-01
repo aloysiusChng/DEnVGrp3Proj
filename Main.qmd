@@ -65,11 +65,6 @@ Additionally, the visualization includes a heatmap that allow users to
 delve into subzones to see pattern in land development and population
 over time.
 
-The clarity and detail of the data presentation have been commended, as
-it allows users to easily identify and understand the trends. The use of
-interactivity, such as hovering over data points for more information,
-adds a layer of depth that static visualizations lack.
-
 However, there are some shortcomings the team has identified:
 
 1.  Complexity: While the visualization is thorough, its complexity may
