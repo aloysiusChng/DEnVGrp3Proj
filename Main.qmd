@@ -5,10 +5,10 @@ embed-resources: true
 format:
   html:
     toc: true
-    toc-depth: 3
+    toc-depth: 2
     toc-location: left
     number-sections: true
-    number-depth: 3
+    number-depth: 2
 editor: 
   markdown: 
     wrap: 72
@@ -25,7 +25,8 @@ For this document, the following packages are required:
 #| include: true
 library(knitr)
 library(readxl)
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
+library(dplyr)
 library(here)
 ```
 
@@ -78,7 +79,8 @@ However, there are some shortcomings the team has identified:
 3.  Data Density: The high density of information in a single
     visualization can lead to cognitive overload, where important
     details might be overlooked due to the sheer volume of data
-    presented.([Front Psychol. 2023](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/))
+    presented.([Front Psychol.
+    2023](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/))
 
 4.  Limited Temporal Range: The visualization only covers data for the
     year 2023, which constrains the analysis to a narrow timeframe and
@@ -103,7 +105,8 @@ follows:
     and ease of interpretation for all users. One such example is the
     use of Color Universal Design (CUD) colors which are designed to be
     distinguishable by all users, including those with color vision
-    deficiencies.([Okabe and Ito 2008](https://jfly.uni-koeln.de/color/))
+    deficiencies.([Okabe and Ito
+    2008](https://jfly.uni-koeln.de/color/))
 
 2.  Reduced Data Density: Simplify the presentation by reducing the
     number of data points displayed simultaneously, thus preventing
@@ -136,6 +139,9 @@ setwd(here::here())
 
 # List all CSV files in the data folder
 file_list <- list.files("data", pattern = "*.csv")
+
+# Print the list of files
+print(file_list)
 
 # Read and combine all CSV files
 csv_list <- lapply(file_list, function(x) read.csv(file.path("data", x)))
