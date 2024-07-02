@@ -157,9 +157,14 @@ the data and identify any missing values or inconsistencies.
 
 ```{r}
 # Display the first few rows of the combined data frame
-glimpse(df)
+head(df)
 # Display the last few rows of the combined data frame
 tail(df)
+```
+We can check the total number of rows in the data frame.
+```{r}
+# Display the total number of rows in the data frame
+nrow(df)
 ```
 
 Based on the data type and structure, we will remove the columns that
@@ -237,3 +242,4 @@ https://www.singstat.gov.sg/-/media/files/publications/population/population2023
 https://jfly.uni-koeln.de/color/
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
 https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+
