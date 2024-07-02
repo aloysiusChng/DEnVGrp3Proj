@@ -258,18 +258,18 @@ plotly to add interactivity.
 
 # References
 
--   Arnold, M., Goldschmitt, M., & Rigotti, T. (2023, June 21). Dealing
+1.  Arnold, M., Goldschmitt, M., & Rigotti, T. (2023, June 21). Dealing
     with information overload: A comprehensive review. Frontiers in
-    psychology. [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/)
+    psychology. <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/>
 
--   Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to
+2.  Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to
     make figures and presentations that are friendly to Colorblind
     people. <https://jfly.uni-koeln.de/color/>
 
--   Singapore Department of Statistics. (2023). Population Trends 2023.
+3.  Singapore Department of Statistics. (2023). Population Trends 2023.
     <https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx>
 
--   Department of Statistics Singapore. (2000 - 2023). Singapore
+4.  Department of Statistics Singapore. (2000 - 2023). Singapore
     Residents by Planning Area / Subzone, Single Year of Age and Sex
     (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023)
     \[Data set\].

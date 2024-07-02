@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -3109,10 +3109,7 @@ vertical-align: -.125em;
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package &#39;here&#39; was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at C:/Users/aloys/OneDrive/Documents/Year 1 Tri 3/AAI 1001 Data Engineering and Visualization/DEnVGrp3Proj</code></pre>
+<pre><code>here() starts at C:/Users/azree/OneDrive/Desktop/Uni/DEnVGrp3Proj</code></pre>
 </div>
 </div>
 <section id="original-data-visualization-in-news-media" class="level1" data-number="1">
@@ -3157,30 +3154,30 @@ Figure 1: Visualization of Choropleth Map of Resident Population Density by the
 <h1 data-number="4"><span class="header-section-number">4</span> Data Cleaning</h1>
 <p>The Singapore Department of Statistics based its visualization on data collected by the Singapore Government from the year 2023 available in CSV format. The data includes the following columns: Planning Area, Population, Age Profile, and Gender (<a href="https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data">2023</a>). For our improved visualization we will be using dataset dating as far back as 2000 to 2023. The department of statistics categorize the data into a range of 10 years (e.g 2000-2010, 2011-2020) and for data set that have not met the 10 year range are given in seperate files instead. As such we will first have to combined the data into a single file and then clean the data to ensure that it is in a Dataframe.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the working directory to the root of the project folder</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(here<span class="sc">::</span><span class="fu">here</span>())</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all CSV files in the data folder</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;*.csv&quot;</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the list of files</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(file_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the working directory to the root of the project folder</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(here<span class="sc">::</span><span class="fu">here</span>())</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all CSV files in the data folder</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;*.csv&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the list of files</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(file_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;respopagesex2000to2010.csv&quot; &quot;respopagesex2011to2020.csv&quot;
 [3] &quot;respopagesex2021.csv&quot;       &quot;respopagesex2022.csv&quot;      
 [5] &quot;respopagesex2023.csv&quot;      </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and combine all CSV files</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>csv_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(file_list, <span class="cf">function</span>(x) <span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, x)))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, csv_list)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the combined data frame to a new CSV file (optional if you want to view it before we start cleaning) </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(df, file.path(&quot;data&quot;, &quot;combined_data.csv&quot;), row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and combine all CSV files</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>csv_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(file_list, <span class="cf">function</span>(x) <span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, x)))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, csv_list)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the combined data frame to a new CSV file (optional if you want to view it before we start cleaning) </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(df, file.path(&quot;data&quot;, &quot;combined_data.csv&quot;), row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once the data has been combined, we will perform a summary of the data using the glimpse() and tail() function to understand the structure of the data and identify any missing values or inconsistencies.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the combined data frame</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the combined data frame</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          PA        SZ Age     Sex Pop Time
 1 Ang Mo Kio Cheng San   0   Males 140 2000
@@ -3190,8 +3187,8 @@ Figure 1: Visualization of Choropleth Map of Resident Population Density by the
 5 Ang Mo Kio Cheng San   2   Males 160 2000
 6 Ang Mo Kio Cheng San   2 Females 130 2000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the last few rows of the combined data frame</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the last few rows of the combined data frame</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            PA          SZ         Age     Sex Pop Time
 1393751 Yishun Yishun West          88   Males  40 2023
@@ -3204,31 +3201,31 @@ Figure 1: Visualization of Choropleth Map of Resident Population Density by the
 </div>
 <p>We can check the total number of rows in the data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the total number of rows in the data frame</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the total number of rows in the data frame</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1393756</code></pre>
 </div>
 </div>
 <p>Based on the data type and structure, we will remove the columns that are not relevant to our visualization and clean the remaining columns to ensure consistency and accuracy. We will also aggregate the data to create a new data frame that consolidates the total population by age group, planning area, and time period.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deleting &quot;SZ&quot; and &quot;Sex&quot; columns as they are not relevant to our visualization</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;SZ&quot;</span>, <span class="sc">-</span><span class="st">&quot;Sex&quot;</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to create age groups from 1,2,3,4... to 1-9, 10,19...</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>create_age_group <span class="ot">&lt;-</span> <span class="cf">function</span>(age) {</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (age <span class="sc">==</span> <span class="st">&quot;90_and_over&quot;</span> <span class="sc">||</span> age <span class="sc">==</span> <span class="st">&quot;90_and_Over&quot;</span>) {</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">&quot;90 and Over&quot;</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    age_num <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(age)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    group_start <span class="ot">&lt;-</span> (age_num <span class="sc">%/%</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="dv">10</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    group_end <span class="ot">&lt;-</span> group_start <span class="sc">+</span> <span class="dv">9</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">paste0</span>(group_start, <span class="st">&quot; to &quot;</span>, group_end))</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Mutating the age column into a new AgeGroup column</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AgeGroup =</span> <span class="fu">sapply</span>(Age, create_age_group))</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deleting &quot;SZ&quot; and &quot;Sex&quot; columns as they are not relevant to our visualization</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;SZ&quot;</span>, <span class="sc">-</span><span class="st">&quot;Sex&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to create age groups from 1,2,3,4... to 1-9, 10,19...</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>create_age_group <span class="ot">&lt;-</span> <span class="cf">function</span>(age) {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (age <span class="sc">==</span> <span class="st">&quot;90_and_over&quot;</span> <span class="sc">||</span> age <span class="sc">==</span> <span class="st">&quot;90_and_Over&quot;</span>) {</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">&quot;90 and Over&quot;</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    age_num <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(age)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    group_start <span class="ot">&lt;-</span> (age_num <span class="sc">%/%</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    group_end <span class="ot">&lt;-</span> group_start <span class="sc">+</span> <span class="dv">9</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">paste0</span>(group_start, <span class="st">&quot; to &quot;</span>, group_end))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Mutating the age column into a new AgeGroup column</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AgeGroup =</span> <span class="fu">sapply</span>(Age, create_age_group))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          PA Age Pop Time AgeGroup
 1 Ang Mo Kio   0 140 2000   0 to 9
@@ -3241,33 +3238,33 @@ Figure 1: Visualization of Choropleth Map of Resident Population Density by the
 </div>
 <p>Next, we will clean the ‘Pop’ and by removing any non-numeric characters and convert it to a numeric data type for aggregation to make the dataframe more memory efficient as having char data type for these columns can take up alot of memory usage which can hamper the work flow. Within one of the original data set, the data gathered in 2000, had a group of which did not state which Planning Area they were staying in. As such we will remove these rows as it is not relevant to our visualization. Afterwards we will then aggregate the data to calculate the total population by age group, planning area, and time period.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to clean the &#39;Pop&#39; column by removing non-numeric characters</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>clean_pop <span class="ot">&lt;-</span> <span class="cf">function</span>(pop) {</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove any non-digit characters</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  clean_pop <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;[^0-9]&quot;</span>, <span class="st">&quot;&quot;</span>, pop)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(clean_pop)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to drop any row containing &quot;Not Stated&quot; in the PA column as this is not relevant to our visualization</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>drop_not_stated <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">column_name =</span> <span class="st">&quot;PA&quot;</span>) {</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter out rows where the specified column contains &quot;Not Stated&quot;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>(.data[[column_name]] <span class="sc">==</span> <span class="st">&quot;Not Stated&quot;</span>))</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the drop_not_stated function to the dataframe</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">drop_not_stated</span>(df, <span class="st">&quot;PA&quot;</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the cleaning function to the &#39;Pop&#39; column</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">sapply</span>(df<span class="sc">$</span>Pop, clean_pop)</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Pop to numeric for aggregation</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(df<span class="sc">$</span>Pop)</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Move columns to a new data frame to consolidate total population, Age Group and Time</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>aggregated_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA, AgeGroup, Time) <span class="sc">%&gt;%</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalPop =</span> <span class="fu">sum</span>(Pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to clean the &#39;Pop&#39; column by removing non-numeric characters</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>clean_pop <span class="ot">&lt;-</span> <span class="cf">function</span>(pop) {</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove any non-digit characters</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  clean_pop <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;[^0-9]&quot;</span>, <span class="st">&quot;&quot;</span>, pop)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(clean_pop)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to drop any row containing &quot;Not Stated&quot; in the PA column as this is not relevant to our visualization</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>drop_not_stated <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">column_name =</span> <span class="st">&quot;PA&quot;</span>) {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter out rows where the specified column contains &quot;Not Stated&quot;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>(.data[[column_name]] <span class="sc">==</span> <span class="st">&quot;Not Stated&quot;</span>))</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the drop_not_stated function to the dataframe</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">drop_not_stated</span>(df, <span class="st">&quot;PA&quot;</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the cleaning function to the &#39;Pop&#39; column</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">sapply</span>(df<span class="sc">$</span>Pop, clean_pop)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Pop to numeric for aggregation</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(df<span class="sc">$</span>Pop)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Move columns to a new data frame to consolidate total population, Age Group and Time</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>aggregated_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA, AgeGroup, Time) <span class="sc">%&gt;%</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalPop =</span> <span class="fu">sum</span>(Pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by &#39;PA&#39;, &#39;AgeGroup&#39;. You can override using
 the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(aggregated_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(aggregated_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
 # Groups:   PA, AgeGroup [1]
@@ -3283,8 +3280,8 @@ the `.groups` argument.</code></pre>
 </div>
 <p>We can save the cleaned data to a new CSV file for future use.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Saved for future use</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(aggregated_df, <span class="st">&quot;cleaned_data.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Saved for future use</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(aggregated_df, <span class="st">&quot;cleaned_data.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="conclusion" class="level1" data-number="5">
@@ -3293,12 +3290,12 @@ the `.groups` argument.</code></pre>
 </section>
 <section id="references" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> References</h1>
-<ul>
-<li><p>Arnold, M., Goldschmitt, M., &amp; Rigotti, T. (2023, June 21). Dealing with information overload: A comprehensive review. Frontiers in psychology. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/</p></li>
-<li><p>Okabe, M., &amp; Ito, K. (2008). Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. https://jfly.uni-koeln.de/color/</p></li>
-<li><p>Singapore Department of Statistics. (2023). Population Trends 2023. https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx</p></li>
-<li><p>Department of Statistics Singapore. (2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) [Data set]. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data</p></li>
-</ul>
+<ol type="1">
+<li><p>Arnold, M., Goldschmitt, M., &amp; Rigotti, T. (2023, June 21). Dealing with information overload: A comprehensive review. Frontiers in psychology. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/</a></p></li>
+<li><p>Okabe, M., &amp; Ito, K. (2008). Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. <a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/</a></p></li>
+<li><p>Singapore Department of Statistics. (2023). Population Trends 2023. <a href="https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx" class="uri">https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx</a></p></li>
+<li><p>Department of Statistics Singapore. (2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) [Data set]. <a href="https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data" class="uri">https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data</a></p></li>
+</ol>
 </section>
 
 </main>
