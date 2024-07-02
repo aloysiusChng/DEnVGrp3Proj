@@ -120,7 +120,7 @@ follows:
 
 3.  Interactive Elements: Hovering over a country will display a tooltip
     with detailed information on the population size of a certain region
-    of singapore as well the age profile.
+    of singapore as well as the age profile.
 
 4.  Expanded Temporal Ranges: Introduce options for users to select
     specific time periods for analysis, facilitating a deeper
