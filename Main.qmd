@@ -253,6 +253,6 @@ plotly to add interactivity.
 
 - Singapore Department of Statistics. (2023). Population Trends 2023. https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
 
-- Singapore Department of Statistics. (2023). Geographic Distribution. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+- Department of Statistics Singapore. (2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) [Data set]. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
 
 
