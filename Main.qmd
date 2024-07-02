@@ -60,8 +60,8 @@ mappings will refine our approach, providing a more comprehensive
 exploration of how urban planning influences demographic distribution
 and housing patterns in Singapore.
 
-![ Visualization of Choropleth Map of Resident Population
-Density by the Department of Statistics Singapore ([Singstat
+![Visualization of Choropleth Map of Resident Population Density by the
+Department of Statistics Singapore ([Singstat
 2023](https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx))](Images/Figure1.png){#fig-1}
 
 # Critical Assessment of the Original The selected visualization from
@@ -207,9 +207,11 @@ Next, we will clean the 'Pop' and by removing any non-numeric characters
 and convert it to a numeric data type for aggregation to make the
 dataframe more memory efficient as having char data type for these
 columns can take up alot of memory usage which can hamper the work flow.
-Within one of the original data set, the data gathered in 2000, had a group of which did not state which Planning Area they were staying in. As such we will remove these rows as it is not relevant to our visualization.
-Afterwards we will then aggregate the data to calculate the total
-population by age group, planning area, and time period.
+Within one of the original data set, the data gathered in 2000, had a
+group of which did not state which Planning Area they were staying in.
+As such we will remove these rows as it is not relevant to our
+visualization. Afterwards we will then aggregate the data to calculate
+the total population by age group, planning area, and time period.
 
 ```{r}
 # Function to clean the 'Pop' column by removing non-numeric characters
@@ -258,17 +260,17 @@ plotly to add interactivity.
 
 -   Arnold, M., Goldschmitt, M., & Rigotti, T. (2023, June 21). Dealing
     with information overload: A comprehensive review. Frontiers in
-    psychology. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
+    psychology. [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/)
 
 -   Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to
     make figures and presentations that are friendly to Colorblind
-    people. https://jfly.uni-koeln.de/color/
+    people. <https://jfly.uni-koeln.de/color/>
 
 -   Singapore Department of Statistics. (2023). Population Trends 2023.
-    https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
+    <https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx>
 
 -   Department of Statistics Singapore. (2000 - 2023). Singapore
     Residents by Planning Area / Subzone, Single Year of Age and Sex
     (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023)
     \[Data set\].
-    https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+    <https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data>
