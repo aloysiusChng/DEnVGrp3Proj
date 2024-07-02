@@ -233,7 +233,7 @@ We can save the cleaned data to a new CSV file for future use.
 
 ```{r}
 # Saved for future use
-write_csv(aggregated_df, "test.csv")
+write_csv(aggregated_df, "cleaned_data.csv")
 ```
 
 # Conclusion
