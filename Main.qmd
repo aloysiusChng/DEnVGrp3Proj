@@ -16,9 +16,13 @@ editor:
 
 <font size="6"> **Team Project Proposal** </font>
 
-**Authors:** \* Muhammad Azreen Bin Muhammad (2200581), Fun Kai Jun
-(2303556), Chng Song Heng Aloysius (2302857), Shaikh Mohamed Irfan
-(2302696), Yeo Ya Xuan Beata (2302775)
+**Authors:**\
+
+-   **Muhammad Azreen Bin Muhammad (2200581)**
+-   **Fun Kai Jun (2303556)**
+-   **Chng Song Heng Aloysius (2302857)**
+-   **Shaikh Mohamed Irfan (2302696)**
+-   **Yeo Ya Xuan Beata (2302775)**
 
 For this document, the following packages are required:
 
