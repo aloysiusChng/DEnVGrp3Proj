@@ -16,7 +16,9 @@ editor:
 
 <font size="6"> **Team Project Proposal** </font>
 
-**Authors:** - **Muhammad Azreen Bin Muhammad**
+**Authors:** \* Muhammad Azreen Bin Muhammad (2200581), Fun Kai Jun
+(2303556), Chng Song Heng Aloysius (2302857), Shaikh Mohamed Irfan
+(2302696), Yeo Ya Xuan Beata (2302775)
 
 For this document, the following packages are required:
 
@@ -125,13 +127,14 @@ follows:
 The Singapore Department of Statistics based its visualization on data
 collected by the Singapore Government from the year 2023 available in
 CSV format. The data includes the following columns: Planning Area,
-Population, Age Profile, and Gender ([2023](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data)). For our improved visualization we
-will be using dataset dating as far back as 2000 to 2023. The department
-of statistics categorize the data into a range of 10 years (e.g
-2000-2010, 2011-2020) and for data set that have not met the 10 year
-range are given in seperate files instead. As such we will first have to
-combined the data into a single file and then clean the data to ensure
-that it is in a Dataframe.
+Population, Age Profile, and Gender
+([2023](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data)).
+For our improved visualization we will be using dataset dating as far
+back as 2000 to 2023. The department of statistics categorize the data
+into a range of 10 years (e.g 2000-2010, 2011-2020) and for data set
+that have not met the 10 year range are given in seperate files instead.
+As such we will first have to combined the data into a single file and
+then clean the data to ensure that it is in a Dataframe.
 
 ```{r}
 # Set the working directory to the root of the project folder
@@ -161,7 +164,9 @@ head(df)
 # Display the last few rows of the combined data frame
 tail(df)
 ```
+
 We can check the total number of rows in the data frame.
+
 ```{r}
 # Display the total number of rows in the data frame
 nrow(df)
@@ -242,4 +247,3 @@ https://www.singstat.gov.sg/-/media/files/publications/population/population2023
 https://jfly.uni-koeln.de/color/
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
 https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
-
