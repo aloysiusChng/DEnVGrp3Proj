@@ -247,7 +247,12 @@ plotly to add interactivity.
 
 # References
 
-https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
-https://jfly.uni-koeln.de/color/
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
-https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+- Arnold, M., Goldschmitt, M., & Rigotti, T. (2023, June 21). Dealing with information overload: A comprehensive review. Frontiers in psychology. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
+
+- Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. https://jfly.uni-koeln.de/color/
+
+- Singapore Department of Statistics. (2023). Population Trends 2023. https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
+
+- Singapore Department of Statistics. (2023). Geographic Distribution. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+
+
