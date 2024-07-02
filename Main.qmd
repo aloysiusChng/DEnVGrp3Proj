@@ -85,7 +85,7 @@ However, there are some shortcomings the team has identified:
 3.  Data Density: The high density of information in a single
     visualization can lead to cognitive overload, where important
     details might be overlooked due to the sheer volume of data
-    presented.([Front Psychol.
+    presented. ([Front Psychol.
     2023](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/))
 
 4.  Limited Temporal Range: The visualization only covers data for the
@@ -111,7 +111,7 @@ follows:
     and ease of interpretation for all users. One such example is the
     use of Color Universal Design (CUD) colors which are designed to be
     distinguishable by all users, including those with color vision
-    deficiencies.([Okabe and Ito
+    deficiencies. ([Okabe and Ito
     2008](https://jfly.uni-koeln.de/color/))
 
 2.  Reduced Data Density: Simplify the presentation by reducing the
@@ -207,6 +207,7 @@ Next, we will clean the 'Pop' and by removing any non-numeric characters
 and convert it to a numeric data type for aggregation to make the
 dataframe more memory efficient as having char data type for these
 columns can take up alot of memory usage which can hamper the work flow.
+Within one of the original data set, the data gathered in 2000, had a group of which did not state which Planning Area they were staying in. As such we will remove these rows as it is not relevant to our visualization.
 Afterwards we will then aggregate the data to calculate the total
 population by age group, planning area, and time period.
 
@@ -217,6 +218,14 @@ clean_pop <- function(pop) {
   clean_pop <- gsub("[^0-9]", "", pop)
   return(clean_pop)
 }
+# Function to drop any row containing "Not Stated" in the PA column as this is not relevant to our visualization
+drop_not_stated <- function(df, column_name = "PA") {
+  # Filter out rows where the specified column contains "Not Stated"
+  df <- df %>% filter(!(.data[[column_name]] == "Not Stated"))
+  return(df)
+}
+# Apply the drop_not_stated function to the dataframe
+df<- drop_not_stated(df, "PA")
 # Apply the cleaning function to the 'Pop' column
 df$Pop <- sapply(df$Pop, clean_pop)
 # Convert Pop to numeric for aggregation
