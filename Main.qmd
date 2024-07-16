@@ -248,12 +248,38 @@ write_csv(aggregated_df, "cleaned_data.csv")
 ```
 
 ```{r}
+library(sf)
+library(tmap)
+
+# Read the KML file
+singapore_kml <- st_read("singapore.kml")
+
+# Inspect the KML file structure
+str(singapore_kml)
+head(singapore_kml)
+
+# Set tmap mode to "view" for interactive maps
+tmap_mode("view")
+tmap_options(check.and.fix = TRUE)
+tmap_options(max.categories = 31)
+
+# Create the interactive map
+tm_shape(singapore_kml) +
+  tm_borders("blue", lwd = 1) +
+  tm_fill(col = "Name", palette = "Set3", alpha = 0.5) + # Replace 'Name' with the appropriate column name
+  tm_text("Name", size = 0.7) + # Replace 'Name' with the appropriate column name
+  tm_view(bbox = st_bbox(singapore_kml)) # Zoom to the extent of the Singapore data
+```
+```{r}
+singapore_kml
+```
+```{r}
 # Load the libraries
 library(sf)
 library(ggplot2)
 
 # Define the path to your KML file (ensure this path is correct)
-kml_file_path <- "singapore.kml"
+kml_file_path <- "singapore2.kml"
 
 # Read the KML file
 singapore_map <- st_read(kml_file_path)
@@ -269,8 +295,56 @@ ggplot(data = singapore_map) +
        x = "Longitude",
        y = "Latitude")
 
+```
+
+```{r}
+
+# Load the libraries
+library(leaflet)
+library(sf)
+library(lwgeom)
+
+# Define the path to your KML file (ensure this path is correct)
+kml_file_path <- "singapore.kml"
+
+# Read the KML file
+singapore_map <- st_read(kml_file_path)
+
+# Clean and validate the geometries
+singapore_map_clean <- st_make_valid(singapore_map)
+
+# Optionally, check for and remove any empty geometries
+singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
+
+# Inspect the cleaned KML data to ensure it's valid
+print(head(singapore_map_clean))
+
+# Create an interactive map with leaflet
+leaflet(singapore_map_clean) %>%
+  addTiles() %>%
+  addPolygons(
+    color = "#444444", 
+    weight = 1, 
+    smoothFactor = 0.5,
+    opacity = 1.0, 
+    fillOpacity = 0.5,
+    fillColor = ~colorQuantile("YlGnBu", NULL)(st_area(singapore_map_clean)),
+    highlightOptions = highlightOptions(
+      color = "white", 
+      weight = 2,
+      bringToFront = TRUE
+    ),
+    label = ~paste("Planning Area: ", Name)
+  ) %>%
+  addLegend(
+    position = "bottomright", 
+    pal = colorQuantile("YlGnBu", NULL), 
+    values = ~st_area(singapore_map_clean),
+    title = "Area"
+  )
 
 ```
+
 
 # Conclusion
 
