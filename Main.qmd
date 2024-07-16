@@ -247,6 +247,31 @@ We can save the cleaned data to a new CSV file for future use.
 write_csv(aggregated_df, "cleaned_data.csv")
 ```
 
+```{r}
+# Load the libraries
+library(sf)
+library(ggplot2)
+
+# Define the path to your KML file (ensure this path is correct)
+kml_file_path <- "singapore.kml"
+
+# Read the KML file
+singapore_map <- st_read(kml_file_path)
+
+# Inspect the KML data to understand its structure
+print(head(singapore_map))
+
+# Plot the map with ggplot2
+ggplot(data = singapore_map) +
+  geom_sf() +
+  theme_minimal() +
+  labs(title = "Planning Areas in Singapore",
+       x = "Longitude",
+       y = "Latitude")
+
+
+```
+
 # Conclusion
 
 The data is now ready for visualization. The next step will be to create
