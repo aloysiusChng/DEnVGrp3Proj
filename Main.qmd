@@ -401,6 +401,21 @@ plot_ly(singapore_map_clean) %>%
   )
 ````
 
+Next how do we get the cleaned_data.csv file 
+
+```{r}
+# Load the cleaned data
+cleaned_data <- read_csv("cleaned_data.csv")
+
+# Display the first few rows of the cleaned data
+head(cleaned_data)
+```
+
+
+
+
+
+
 
 # Conclusion
 
