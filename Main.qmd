@@ -345,6 +345,62 @@ leaflet(singapore_map_clean) %>%
 
 ```
 
+```{r}  
+# Load the libraries
+library(sf)
+library(lwgeom)
+library(plotly)
+
+# Define the path to your KML file (ensure this path is correct)
+kml_file_path <- "singapore.kml"
+
+# Read the KML file
+singapore_map <- st_read(kml_file_path)
+
+# Clean and validate the geometries
+singapore_map_clean <- st_make_valid(singapore_map)
+
+# Optionally, check for and remove any empty geometries
+singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
+
+# Inspect the cleaned KML data to ensure it's valid
+print(head(singapore_map_clean))
+
+# Create a Plotly map
+plot_ly(singapore_map_clean) %>%
+  add_sf(
+    aes(fill = ~st_area(singapore_map_clean), 
+         text = ~paste("Planning Area: ", Name)),
+    color = I("blue"),
+    opacity = 0.5
+  ) %>%
+  layout(
+    mapbox = list(
+      style = "carto-positron",
+      zoom = 10,
+      center = list(lat = 1.3521, lon = 103.8198)
+    ),
+    margin = list(r = 0, l = 0, t = 0, b = 0)
+  ) %>%
+  add_annotations(
+    text = "Area",
+    x = 0.01,
+    y = 0.95,
+    xref = "paper",
+    yref = "paper",
+    showarrow = FALSE,
+    font = list(size = 12, color = "black")
+  ) %>%
+  colorbar(
+    title = "Area",
+    len = 0.5,
+    y = 0.5,
+    x = 0.01,
+    yref = "paper",
+    xref = "paper"
+  )
+````
+
 
 # Conclusion
 
