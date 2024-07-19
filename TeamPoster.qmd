@@ -51,8 +51,15 @@ kml_file_path <- "MasterPlan2019PlanningAreaBoundaryNoSea.kml"
 # Read the KML file
 singapore_map <- st_read(kml_file_path)
 
+# Drop the description column
+singapore_map <- singapore_map %>% select(-Description)
+
 # Load cleaned data from previous assignment
 cleaned_data <- read_csv("cleaned_data.csv")
+
+# Select only those from the year 2023 and drop the AgeGroup
+cleaned_data <- cleaned_data %>%
+  filter(Time == 2023)
 ```
 
 ## Data Cleaning
@@ -66,15 +73,24 @@ singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
 
 # Inspect the cleaned KML data to ensure it's valid
 print(head(singapore_map_clean))
+
+# Uppercase the PA column in the cleaned data
+cleaned_data <- cleaned_data %>%
+  mutate(PA = toupper(PA))
 ```
 
 ## Data Aggregation
 
 ```{r}
-# Aggregate the geometries by planning area to link TotalPop to the geometries
-singapore_map_agg <- singapore_map_clean %>%
+# Aggregate both the KML data and the cleaned data
+merged_data <- singapore_map_clean %>%
   left_join(cleaned_data, by = c("Name" = "PA"))
 
+# TO BE FIXED
+# Aggregate the TotalPop values by PA and AgeGroup
+aggregated_data <- merged_data %>%
+  group_by(Name, AgeGroup) %>%
+  summarize(TotalPop = sum(TotalPop, na.rm = TRUE), .groups = 'drop')
 ```
 
 # Data Visualization
@@ -82,26 +98,27 @@ singapore_map_agg <- singapore_map_clean %>%
 ## Plotting the Map
 
 ```{r}
+# TO BE FIXED
 # Create an interactive map with leaflet
-leaflet(singapore_map_agg) %>%
+leaflet(merged_data) %>%
   addPolygons(
     color = "#444444", 
     weight = 1, 
     smoothFactor = 0.5,
     opacity = 1.0, 
     fillOpacity = 0.5,
-    fillColor = ~colorQuantile("YlGnBu", NULL)(st_area(singapore_map_agg)),
+    fillColor = ~colorQuantile("YlGnBu", NULL)(st_area(merged_data)),
     highlightOptions = highlightOptions(
       color = "white", 
       weight = 2,
       bringToFront = TRUE
     ),
-    label = ~paste("Planning Area: ", Name)
+    label = ~paste("Planning Area: ", Name, "<br>Total Population (2023): ", TotalPop)
   ) %>%
   addLegend(
     position = "bottomright", 
     pal = colorQuantile("YlGnBu", NULL), 
-    values = ~st_area(singapore_map_clean),
+    values = ~st_area(merged_data),
     title = "Area"
   )
 ```
