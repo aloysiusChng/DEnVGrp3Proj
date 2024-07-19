@@ -251,7 +251,7 @@ write_csv(aggregated_df, "cleaned_data.csv")
 # Load the libraries
 library(sf)
 library(ggplot2)
-
+library(dplyr)
 # Define the path to your KML file (ensure this path is correct)
 kml_file_path <- "singapore.kml"
 
@@ -271,6 +271,53 @@ ggplot(data = singapore_map) +
 
 
 ```
+
+how do we see the content inside the kml file
+
+```{r}
+# Display the KML data
+singapore_map
+```
+First import the cleaned_data.csv
+
+```{r}
+library(readr)
+# Load the cleaned data
+aggregated_df <- read_csv("cleaned_data.csv")
+
+# Display the first few rows of the cleaned data
+head(aggregated_df)
+
+```
+
+Next we want to use the names in the PA column in the cleaned_data to match with the kml file so that the TotalPop in the cleaned_data can be plotted on the map. We will then plot the map with the TotalPop data.
+
+```{r}
+# Merge the cleaned data with the KML data based on the Planning Area column
+merged_data <- merge(singapore_map, aggregated_df, by.x = "Name", by.y = "PA", all.x = TRUE)
+
+# Plot the map with the TotalPop data
+ggplot(data = merged_data) +
+  geom_sf(aes(fill = TotalPop)) +
+  theme_minimal() +
+  labs(title = "Population Density by Planning Area in Singapore",
+       fill = "Total Population",
+       x = "Longitude",
+       y = "Latitude") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90")
+
+
+```
+
+
+
+
+
+
+
+
+
+
 
 # Conclusion
 
