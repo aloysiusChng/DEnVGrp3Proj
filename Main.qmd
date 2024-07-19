@@ -305,7 +305,7 @@ library(sf)
 library(lwgeom)
 
 # Define the path to your KML file (ensure this path is correct)
-kml_file_path <- "singapore.kml"
+kml_file_path <- "MasterPlan2019PlanningAreaBoundaryNoSea.kml"
 
 # Read the KML file
 singapore_map <- st_read(kml_file_path)
@@ -321,7 +321,6 @@ print(head(singapore_map_clean))
 
 # Create an interactive map with leaflet
 leaflet(singapore_map_clean) %>%
-  addTiles() %>%
   addPolygons(
     color = "#444444", 
     weight = 1, 
@@ -345,31 +344,105 @@ leaflet(singapore_map_clean) %>%
 
 ```
 
+```{r}
+singapore_map_viewer <- st_read(kml_file_path)
+singapore_map_viewer
+```
+
 ```{r}  
 # Load the libraries
+library(plotly)
 library(sf)
 library(lwgeom)
-library(plotly)
+library(dplyr)
 
-# Define the path to your KML file (ensure this path is correct)
-kml_file_path <- "singapore.kml"
+# Create the Plotly map
+plot_ly(data = singapore_map_clean) %>%
+  add_sf(
+    aes(fill = ~st_area(geometry), 
+        text = ~paste("Planning Area: ", Name)),
+    color = I("blue"),
+    opacity = 0.5
+  ) %>%
+  layout(
+    mapbox = list(
+      style = "carto-positron",
+      zoom = 10,
+      center = list(lat = 1.3521, lon = 103.8198)
+    ),
+    margin = list(r = 0, l = 0, t = 0, b = 0)
+  ) %>%
+  add_annotations(
+    text = "Area",
+    x = 0.01,
+    y = 0.95,
+    xref = "paper",
+    yref = "paper",
+    showarrow = FALSE,
+    font = list(size = 12, color = "black")
+  ) %>%
+  colorbar(
+    title = "Area",
+    len = 0.5,
+    y = 0.5,
+    x = 0.01,
+    yref = "paper",
+    xref = "paper"
+  )
+```
 
-# Read the KML file
+
+```{r}
+plot_ly() %>%
+  add_sf(
+    data = singapore_map_clean,
+    type = "choroplethmapbox",
+    text = ~Name,
+    opacity = 0.5,
+    hoverinfo = "text"
+  ) %>%
+  layout(
+    mapbox = list(
+      style = "carto-positron",
+      zoom = 10,
+      center = list(lat = 1.3521, lon = 103.8198),
+      bearing = 0,
+      pitch = 0
+    ),
+    margin = list(r = 0, l = 0, t = 0, b = 0)
+  )
+```
+
+Next how do we get the cleaned_data.csv file 
+
+```{r}
+# Load the cleaned data
+cleaned_data <- read_csv("cleaned_data.csv")
+
+# Display the first few rows of the cleaned data
+head(cleaned_data)
+```
+
+```{r}
+#Define the path to your KML file (ensure this path is correct)
+kml_file_path <- "ElectoralBoundary2020KML.kml"
+
+#Read the KML file
 singapore_map <- st_read(kml_file_path)
 
-# Clean and validate the geometries
-singapore_map_clean <- st_make_valid(singapore_map)
+#Inspect the KML data to understand its structure
+print(head(singapore_map))
 
-# Optionally, check for and remove any empty geometries
-singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
+# Merge the cleaned data with the KML data based on the Planning Area column
+merged_data <- merge(singapore_map, aggregated_df, by.x = "Name", by.y = "PA", all.x = TRUE)
 
-# Inspect the cleaned KML data to ensure it's valid
-print(head(singapore_map_clean))
+```
 
+```{r}
 # Create a Plotly map
-plot_ly(singapore_map_clean) %>%
+plot_ly(merged_data) %>%
   add_sf(
-    aes(fill = ~st_area(singapore_map_clean), 
+    aes(fill = ~st_area(merged_data), 
          text = ~paste("Planning Area: ", Name)),
     color = I("blue"),
     opacity = 0.5
@@ -399,22 +472,115 @@ plot_ly(singapore_map_clean) %>%
     yref = "paper",
     xref = "paper"
   )
-````
-
-Next how do we get the cleaned_data.csv file 
-
-```{r}
-# Load the cleaned data
-cleaned_data <- read_csv("cleaned_data.csv")
-
-# Display the first few rows of the cleaned data
-head(cleaned_data)
 ```
 
+```{r}
+# Load required libraries
+library(sf)
+library(geojsonio)
 
+# Convert the sf object to GeoJSON
+singapore_geojson <- geojson_json(singapore_map_clean)
+```
 
+```{r}
+# Load required libraries
+library(plotly)
 
+# Create the choroplethmapbox plot
+plot_ly() %>%
+  add_trace(
+    type = "choroplethmapbox",
+    geojson = singapore_geojson,
+    locations = ~no_features,
+    z = ~st_area(geometry),
+    text = ~paste("Planning Area: ", no_features),
+    colorscale = "Viridis",
+    colorbar = list(title = "Area")
+  ) %>%
+  layout(
+    mapbox = list(
+      style = "carto-positron",
+      zoom = 10,
+      center = list(lat = 1.3521, lon = 103.8198)
+    ),
+    margin = list(r = 0, l = 0, t = 0, b = 0)
+  ) %>%
+  add_annotations(
+    text = "Area",
+    x = 0.01,
+    y = 0.95,
+    xref = "paper",
+    yref = "paper",
+    showarrow = FALSE,
+    font = list(size = 12, color = "black")
+  )
+```
 
+```{r}
+library(leaflet)
+library(sf)
+library(lwgeom)
+library(leaflet.extras)
+
+# Define the path to your KML file (ensure this path is correct)
+kml_file_path <- "singapore.kml"
+
+# Read the KML file
+singapore_map <- st_read(kml_file_path)
+
+# Clean and validate the geometries
+singapore_map_clean <- st_make_valid(singapore_map)
+
+# Optionally, check for and remove any empty geometries
+singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
+
+# Create sample data for different years (assuming 'Year' is a column in your data)
+# You should modify this to reflect your actual data structure
+singapore_map_clean$Year <- sample(2000:2020, nrow(singapore_map_clean), replace = TRUE)
+
+# Split the data by year
+data_by_year <- split(singapore_map_clean, singapore_map_clean$Year)
+
+# Create a leaflet map
+leaflet() %>%
+  addTiles() %>%
+  addMapPane("polygons", zIndex = 410) %>%
+  lapply(names(data_by_year), function(year) {
+    addPolygons(
+      data = data_by_year[[year]],
+      color = "#444444",
+      weight = 1,
+      smoothFactor = 0.5,
+      opacity = 1.0,
+      fillOpacity = 0.5,
+      fillColor = ~colorQuantile("YlGnBu", NULL)(st_area(data_by_year[[year]])),
+      highlightOptions = highlightOptions(
+        color = "white",
+        weight = 2,
+        bringToFront = TRUE
+      ),
+      label = ~paste("Planning Area: ", Name),
+      group = year
+    )
+  }) %>%
+  addLayersControl(
+    overlayGroups = names(data_by_year),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  addTimeSlider(
+    timeIntervals = names(data_by_year),
+    position = "bottomleft",
+    label = "Year",
+    min = min(as.integer(names(data_by_year))),
+    max = max(as.integer(names(data_by_year))),
+    value = c(min(as.integer(names(data_by_year))), max(as.integer(names(data_by_year)))),
+    step = 1,
+    animate = TRUE,
+    playButtonLabel = "Play",
+    pauseButtonLabel = "Pause"
+  )
+```
 
 
 # Conclusion

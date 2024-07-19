@@ -1,0 +1,110 @@
+---
+Title: "AAI1001 Data Engineering and Visualization Group 3 Project"
+Author: "Group 3"
+embed-resources: true
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: left
+    number-sections: true
+    number-depth: 2
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+<font size="6"> **Team Project Proposal** </font>
+
+**Authors:**\
+
+-   **Muhammad Azreen Bin Muhammad (2200581)**
+-   **Fun Kai Jun (2303556)**
+-   **Chng Song Heng Aloysius (2302857)**
+-   **Shaikh Mohamed Irfan (2302696)**
+-   **Yeo Ya Xuan Beata (2302775)**
+
+For this document, the following packages are required:
+
+```{r}
+#| label: setup 
+#| include: true
+library(knitr)
+library(readxl)
+suppressPackageStartupMessages(library(tidyverse))
+library(dplyr)
+library(here)
+library(leaflet)
+library(sf)
+library(lwgeom)
+
+```
+
+# Data Engineering
+
+## Load Data Source
+
+```{r}
+# Define the path to the KML file (ensure this path is correct)
+kml_file_path <- "MasterPlan2019PlanningAreaBoundaryNoSea.kml"
+
+# Read the KML file
+singapore_map <- st_read(kml_file_path)
+
+# Load cleaned data from previous assignment
+cleaned_data <- read_csv("cleaned_data.csv")
+```
+
+## Data Cleaning
+
+```{r}
+# Clean and validate the geometries
+singapore_map_clean <- st_make_valid(singapore_map)
+
+# Optionally, check for and remove any empty geometries
+singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
+
+# Inspect the cleaned KML data to ensure it's valid
+print(head(singapore_map_clean))
+```
+
+## Data Aggregation
+
+```{r}
+# Aggregate the geometries by planning area to link TotalPop to the geometries
+singapore_map_agg <- singapore_map_clean %>%
+  left_join(cleaned_data, by = c("Name" = "PA"))
+
+```
+
+# Data Visualization
+
+## Plotting the Map
+
+```{r}
+# Create an interactive map with leaflet
+leaflet(singapore_map_agg) %>%
+  addPolygons(
+    color = "#444444", 
+    weight = 1, 
+    smoothFactor = 0.5,
+    opacity = 1.0, 
+    fillOpacity = 0.5,
+    fillColor = ~colorQuantile("YlGnBu", NULL)(st_area(singapore_map_agg)),
+    highlightOptions = highlightOptions(
+      color = "white", 
+      weight = 2,
+      bringToFront = TRUE
+    ),
+    label = ~paste("Planning Area: ", Name)
+  ) %>%
+  addLegend(
+    position = "bottomright", 
+    pal = colorQuantile("YlGnBu", NULL), 
+    values = ~st_area(singapore_map_clean),
+    title = "Area"
+  )
+```
+
+
+
