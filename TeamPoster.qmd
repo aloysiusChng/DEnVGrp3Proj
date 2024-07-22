@@ -16,7 +16,7 @@ editor:
 
 <font size="6"> **Team Project Proposal** </font>
 
-**Authors:**\
+**Authors:**
 
 -   **Muhammad Azreen Bin Muhammad (2200581)**
 -   **Fun Kai Jun (2303556)**
@@ -37,6 +37,9 @@ library(here)
 library(leaflet)
 library(sf)
 library(lwgeom)
+library(plotly)
+library(shiny)
+library(leaflet.extras)
 ```
 
 # Data Engineering
@@ -69,11 +72,6 @@ summarized_cleaned_data <- bind_rows(cleaned_data, summary_data) %>%
 # Uppercase the PA column in the cleaned data
 summarized_cleaned_data_UPPER <- summarized_cleaned_data %>%
   mutate(PA = toupper(PA))
-
-# Select only those from the year 2023
-summarized_cleaned_data_2023 <- summarized_cleaned_data_UPPER %>%
-  filter(Time == 2023)
-
 ```
 
 ## Data Cleaning
@@ -94,13 +92,7 @@ print(head(singapore_map_clean))
 ```{r}
 # Aggregate both the KML data and the cleaned data
 merged_data <- singapore_map_clean %>%
-  left_join(summarized_cleaned_data_2023, by = c("Name" = "PA"))
-
-# TO BE FIXED
-# Aggregate the TotalPop values by PA and AgeGroup
-aggregated_data <- merged_data %>%
-  group_by(Name, AgeGroup) %>%
-  summarize(TotalPop = sum(TotalPop, na.rm = TRUE), .groups = 'drop')
+  left_join(summarized_cleaned_data_UPPER, by = c("Name" = "PA"))
 ```
 
 # Data Visualization
@@ -108,30 +100,65 @@ aggregated_data <- merged_data %>%
 ## Plotting the Map
 
 ```{r}
-# TO BE FIXED
-# Create an interactive map with leaflet
-leaflet(merged_data) %>%
-  addPolygons(
-    color = "#444444", 
-    weight = 1, 
-    smoothFactor = 0.5,
-    opacity = 1.0, 
-    fillOpacity = 0.5,
-    fillColor = ~colorQuantile("YlGnBu", NULL)(st_area(merged_data)),
-    highlightOptions = highlightOptions(
-      color = "white", 
-      weight = 2,
-      bringToFront = TRUE
-    ),
-    label = ~paste("Planning Area: ", Name, " Total Population (2023): ", TotalPop)
-  ) %>%
-  addLegend(
-    position = "bottomright", 
-    pal = colorQuantile("YlGnBu", NULL), 
-    values = ~st_area(merged_data),
-    title = "Area"
-  )
+# Assuming merged_data is a simple features object (sf) with a Time column
+
+# Create a UI for the Shiny app
+ui <- fluidPage(
+  # Create a slider input
+  sliderInput("year_slider", "Select Year:", 
+              min = min(merged_data$Time), 
+              max = max(merged_data$Time), 
+              value = min(merged_data$Time), 
+              step = 1),
+  
+  # Create a leaflet map
+  leafletOutput("map")
+)
+
+# Create a server function for the Shiny app
+server <- function(input, output) {
+  # Create a reactive expression to filter the data based on the slider input
+  reactive_data <- eventReactive(input$year_slider, {
+    merged_data %>% 
+      filter(Time == input$year_slider)
+  })
+  
+  # Create the leaflet map
+  output$map <- renderLeaflet({
+    # Define the color palette for population density (blue to red)
+    pal <- colorNumeric(
+      palette = c("#FFFFE0", "#F5F5DC", "#B0E57C", "#87CEFA", "#4169E1", "#00008B"), # Blue to red color palette
+      domain = reactive_data()$TotalPop
+    )
+    
+    leaflet(reactive_data()) %>% 
+      addPolygons(
+        color = "black",  # Set border color
+        weight = 2,       # Set border weight
+        smoothFactor = 0.5,
+        opacity = 1.0, 
+        fillOpacity = 0.5,
+        fillColor = ~pal(TotalPop), # Fill color by population with gradient
+        highlightOptions = highlightOptions(
+          color = "white", 
+          weight = 2,
+          bringToFront = TRUE
+        ),
+        label = ~paste("Planning Area: ", Name, "<br>Total Population (", input$year_slider, "): ", TotalPop)
+      ) %>% 
+      addLegend(
+        position = "bottomright", 
+        pal = pal, 
+        values = ~TotalPop,
+        title = "Population Density"
+      ) %>% 
+      addLayersControl(
+        overlayGroups = c("TotalPop"),
+        options = layersControlOptions(collapsed = FALSE)
+      )
+  })
+}
+
+# Run the Shiny app
+shinyApp(ui = ui, server = server)
 ```
-
-
-
