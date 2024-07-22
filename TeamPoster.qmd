@@ -37,7 +37,6 @@ library(here)
 library(leaflet)
 library(sf)
 library(lwgeom)
-
 ```
 
 # Data Engineering
@@ -57,9 +56,24 @@ singapore_map <- singapore_map %>% select(-Description)
 # Load cleaned data from previous assignment
 cleaned_data <- read_csv("cleaned_data.csv")
 
-# Select only those from the year 2023 and drop the AgeGroup
-cleaned_data <- cleaned_data %>%
+# For each unique PA, calculate the total population and store it in a new row before next PA
+summary_data <- cleaned_data %>%
+  group_by(PA, Time) %>%
+  summarise(AgeGroup = 'Total', TotalPop = sum(TotalPop)) %>%
+  ungroup()
+
+# Combine the summarized rows with the original dataframe
+summarized_cleaned_data <- bind_rows(cleaned_data, summary_data) %>%
+  arrange(PA, Time, factor(AgeGroup, levels = unique(c(AgeGroup, "Total"))))
+
+# Uppercase the PA column in the cleaned data
+summarized_cleaned_data_UPPER <- summarized_cleaned_data %>%
+  mutate(PA = toupper(PA))
+
+# Select only those from the year 2023
+summarized_cleaned_data_2023 <- summarized_cleaned_data_UPPER %>%
   filter(Time == 2023)
+
 ```
 
 ## Data Cleaning
@@ -73,10 +87,6 @@ singapore_map_clean <- singapore_map_clean[!st_is_empty(singapore_map_clean),]
 
 # Inspect the cleaned KML data to ensure it's valid
 print(head(singapore_map_clean))
-
-# Uppercase the PA column in the cleaned data
-cleaned_data <- cleaned_data %>%
-  mutate(PA = toupper(PA))
 ```
 
 ## Data Aggregation
@@ -84,7 +94,7 @@ cleaned_data <- cleaned_data %>%
 ```{r}
 # Aggregate both the KML data and the cleaned data
 merged_data <- singapore_map_clean %>%
-  left_join(cleaned_data, by = c("Name" = "PA"))
+  left_join(summarized_cleaned_data_2023, by = c("Name" = "PA"))
 
 # TO BE FIXED
 # Aggregate the TotalPop values by PA and AgeGroup
@@ -113,7 +123,7 @@ leaflet(merged_data) %>%
       weight = 2,
       bringToFront = TRUE
     ),
-    label = ~paste("Planning Area: ", Name, "<br>Total Population (2023): ", TotalPop)
+    label = ~paste("Planning Area: ", Name, " Total Population (2023): ", TotalPop)
   ) %>%
   addLegend(
     position = "bottomright", 
