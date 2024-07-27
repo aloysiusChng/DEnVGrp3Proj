@@ -159,7 +159,7 @@ server <- function(input, output, session) {
      req(reactive_data())
     # Define the color palette for population density (blue to red)
     pal <- colorNumeric(
-      palette = c("#FFFFE0", "#F5F5DC", "#B0E57C", "#87CEFA", "#4169E1", "#00008B"), # Blue to red color palette
+      palette = c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"), # Blue to red color palette
       domain = reactive_data()$TotalPop
     )
     

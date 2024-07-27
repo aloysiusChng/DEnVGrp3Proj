@@ -420,7 +420,7 @@ The geographical distribution of Singapore’s population is crucial in urban st
 = Previous Visualisation
 <previous-visualisation>
 #figure([
-#box(width: 90%,image("images/Figure1.PNG"))
+#box(width: 70%,image("images/Figure1.PNG"))
 ], caption: figure.caption(
 position: bottom, 
 [
@@ -463,7 +463,17 @@ The Choropleth map contains several variables: population distribution \(quantit
 
 = Improved Visualisation
 <improved-visualisation>
-To add image of visualization
+#figure([
+#box(width: 75%,image("images/DataVisualization.png"))
+], caption: figure.caption(
+position: bottom, 
+[
+Visualization of improved Choropleth Map of Resident Population Density by the Department of Statistics Singapore \(Singstat 2023)
+]), 
+kind: "quarto-float-fig", 
+supplement: "Figure", 
+)
+
 
 = Further Suggestions for Interactivity
 <further-suggestions-for-interactivity>
