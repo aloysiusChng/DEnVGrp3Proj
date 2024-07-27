@@ -59,7 +59,7 @@ To add image of visualization
 
 # Further Suggestions for Interactivity
 
-To do
+Implementing dynamic UI updates such as changing the map title or legend based on the selected age group or year. Use 'shinycssloaders' to show loading animations while data is being processed or the map is being updated. Additionally, we could also provide options for users to download filtered data and visualizations as images or CSV files would add significant value to the user experience.
 
 # Conclusion
 
