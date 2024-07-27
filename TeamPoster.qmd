@@ -118,11 +118,25 @@ ui <- fluidPage(
               max = max(merged_data$Time), 
               value = min(merged_data$Time), 
               step = 1),
+   tags$style(HTML("
+    .dropdown-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000; /* Ensure dropdown is above other elements */
+    }
+    .map-container {
+      position: relative;
+    }
+  ")),
   
-    # Create a dropdown menu for Agegroup
-  selectInput("agegroup_filter", "Select Age Group:",
-              choices = unique(merged_data$AgeGroup),
-              selected = unique(merged_data$AgeGroup)[-1]),
+  # Create a dropdown menu for Agegroup inside a div for positioning
+  div(class = "dropdown-container",
+      selectInput("agegroup_filter", "Select Agegroup:",
+                  choices = unique(merged_data$AgeGroup),
+                  selected = unique(merged_data$AgeGroup)[-1])
+  ),
+
   
   # Create a leaflet map
   leafletOutput("map"),
@@ -162,7 +176,7 @@ server <- function(input, output, session) {
           weight = 2,
           bringToFront = TRUE
         ),
-        label = ~paste0("Planning Area: ", Name, "Total Population (", input$year_slider, "): ", TotalPop),
+        label = ~paste0("Planning Area: ", Name, "\n Total Population (", input$year_slider, "): ", TotalPop),
         
         layerId = ~Name  # Set layerId to Name for identifying the polygons
       ) %>% 
