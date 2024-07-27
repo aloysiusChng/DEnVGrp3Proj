@@ -1,0 +1,77 @@
+---
+title: Visualization of Choropleth Map of Resident Population Density in Singapore
+format:
+  poster-typst: 
+    keep-typ: true
+    size: "36x24"
+    poster-authors: "Azreen, Kai Jun, Aloysius, Irfan, Beata"
+    departments: "&nbsp;"
+    institution-logo: "./images/sit.png"
+    footer-text: "AAI1001 AY23/24 Tri 3 Team Project"
+    footer-url: "&nbsp;"
+    footer-emails: "Team 03"
+    footer-color: "ebcfb2"
+---
+
+
+
+
+# Introduction
+
+The geographical distribution of Singapore's population is crucial in urban studies and public policy. Our project examines how demographic characteristics relate to urban planning policies, as illustrated in Figure 1. This visualization, based on data from the Singapore Department of Statistics (2023), highlights significant demographic changes. Commended for its clarity, our work can be enhanced with interactive elements, expanded temporal ranges, and detailed geospatial mappings. These improvements will offer a more comprehensive view of how urban planning impacts population distribution and housing patterns in Singapore.
+
+# Previous Visualisation
+![Visualization of Choropleth Map of Resident Population Density by the Department of Statistics Singapore (Singstat 2023)](images/Figure1.PNG){#fig-label width="90%" fig-align="center"}
+
+
+# Strengths
+
+The Choropleth map contains several variables: population distribution (quantitative) and planning areas (categorical). Additionally, the visualization includes a heatmap that allow users to delve into subzones to see pattern in land development and population over time.
+
+# Suggested Improvements
+
+1. Better contrast: Utilize high-contrast colors to improve accessibility for users with visual impairments, ensuring clarity and ease of interpretation for all users. One such example is the use of Color Universal Design (CUD) colors which are designed to be distinguishable by all users, including those with color vision deficiencies. ([Okabe and Ito 2008](https://jfly.uni-koeln.de/color/))
+
+2.  Reduced Data Density: Simplify the presentation by reducing the number of data points displayed simultaneously, thus preventing overcrowding and making the visualization more comprehensible.
+
+3.  Interactive Elements: Hovering over a country will display a tooltip with detailed information on the population size of a certain region of Singapore as well as the age profile.
+
+4. Expanded Temporal Ranges: Introduce options for users to select specific time periods for analysis, facilitating a deeper exploration of trends over time.
+
+
+# Implementation
+
+## Data
+* Weekly counts of population data by planning area were obtained from the Singapore Department of Statistics. The data includes the total population, age groups, and planning areas for each year.
+Data Source from ([Singapore Department of Statistics](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data))
+* The geospatial data for the planning areas was obtained from the Master Plan 2019 Planning Area Boundary KML file.
+Data Source from ([Urban Redevelopment Authority (URA)](https://www.ura.gov.sg/maps/#master-plan))
+
+## Software
+* _dplyr_ package is used for data manipulation
+* _leaflet_ package is used for creating interactive maps
+* _sf_ package is used for handling spatial data
+* _shiny_ package is used for building interactive web applications
+
+# Improved Visualisation
+
+To add image of visualization 
+
+# Further Suggestions for Interactivity
+
+To do
+
+# Conclusion
+
+The plot can effectively communicate the relationship between the population density in each region of Singapore over time, and additionally allow curious readers to explore the data even further using interactivity.
+
+# References
+
+1. Arnold, M., Goldschmitt, M., & Rigotti, T. (2023, June 21). Dealing with information overload: A comprehensive review. Frontiers in psychology. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
+
+2. Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. https://jfly.uni-koeln.de/color/
+
+3. Singapore Department of Statistics. (2023). Population Trends 2023. https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
+
+4. Department of Statistics Singapore. (2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) [Data set]. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+
