@@ -103,6 +103,13 @@ merged_data <- singapore_map_clean %>%
 I want to add text at the bottom of the map so it displays all the data that is in hovered area
 
 ```{r}
+library(shiny)
+library(leaflet)
+library(dplyr)
+library(sf)
+
+# Assuming merged_data is a simple features object (sf) with a Time column
+
 # Create a UI for the Shiny app
 ui <- fluidPage(
   # Create a slider input
@@ -111,6 +118,11 @@ ui <- fluidPage(
               max = max(merged_data$Time), 
               value = min(merged_data$Time), 
               step = 1),
+  
+    # Create a dropdown menu for Agegroup
+  selectInput("agegroup_filter", "Select Age Group:",
+              choices = unique(merged_data$AgeGroup),
+              selected = unique(merged_data$AgeGroup)[-1]),
   
   # Create a leaflet map
   leafletOutput("map"),
@@ -122,13 +134,15 @@ ui <- fluidPage(
 # Create a server function for the Shiny app
 server <- function(input, output, session) {
   # Create a reactive expression to filter the data based on the slider input
-  reactive_data <- eventReactive(input$year_slider, {
+    reactive_data <- reactive({
+    req(input$year_slider, input$agegroup_filter)  # Ensure inputs are available
     merged_data %>% 
-      filter(Time == input$year_slider)
+      filter(Time == input$year_slider, AgeGroup == input$agegroup_filter)
   })
   
   # Create the leaflet map
   output$map <- renderLeaflet({
+     req(reactive_data())
     # Define the color palette for population density (blue to red)
     pal <- colorNumeric(
       palette = c("#FFFFE0", "#F5F5DC", "#B0E57C", "#87CEFA", "#4169E1", "#00008B"), # Blue to red color palette
@@ -148,7 +162,8 @@ server <- function(input, output, session) {
           weight = 2,
           bringToFront = TRUE
         ),
-        label = ~paste("Planning Area: ", Name, "<br>Total Population (", input$year_slider, "): ", TotalPop),
+        label = ~paste0("Planning Area: ", Name, "Total Population (", input$year_slider, "): ", TotalPop),
+        
         layerId = ~Name  # Set layerId to Name for identifying the polygons
       ) %>% 
       addLegend(
@@ -173,7 +188,7 @@ server <- function(input, output, session) {
       print(total_pop)  
       
       output$hover_info <- renderText({
-        paste("Planning Area: ", name, "\nTotal Population (", input$year_slider, "): ", total_pop)
+        paste("Planning Area: ", name, "\nTotal Population: ", total_pop)
       })
     }
   })
