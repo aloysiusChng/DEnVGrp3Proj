@@ -475,11 +475,15 @@ supplement: "Figure",
 )
 
 
+= Insight
+<insight>
+We can see how certain regions like Punggol, Jurong West, and Tampines have experienced significant population growth over the years due to new housing development plans in the early 2000s. This visualization allows users to explore the population density of different planning areas in Singapore and observe changes over time.
+
 = Further Suggestions for Interactivity
 <further-suggestions-for-interactivity>
-We propose implementing dynamic UI updates, such as changing the map title or legend based on the selected age group or year. Additionally, using 'shinycssloaders' will provide loading animations while data is being processed or the map is being updated. Furthermore, offering options for users to download filtered data and visualizations as images or CSV files would significantly enhance the user experience.
+We propose implementing dynamic UI updates, such as changing the map title or legend based on selected criteria, and using 'shinycssloaders' for loading animations. Additionally, offering options to download filtered data and visualizations would enhance user experience.
 
-Another recommendation is to implement conditional highlighting on the map based on user-defined criteria, such as highlighting areas with population growth above a certain percentage or areas with a high density of elderly residents. Finally, integrating a time slider with play/pause controls would allow users to see changes over time automatically, providing a more interactive and informative experience.
+Conditional highlighting based on user-defined criteria, such as population growth or elderly density, and integrating a time slider with play/pause controls for automatic changes over time would provide a more interactive and informative experience
 
 = Conclusion
 <conclusion>
