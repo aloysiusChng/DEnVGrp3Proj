@@ -216,7 +216,7 @@
   body
 ) = {
   // Set the body font.
-  set text(font: "STIX Two Text", size: 20pt)
+  set text(font: "STIX Two Text", size: 18pt)
   let sizes = size.split("x")
   let width = int(sizes.at(0)) * 1in
   let height = int(sizes.at(1)) * 1in
@@ -314,7 +314,7 @@
       rows: 2,
       columns: (univ_logo_column_size, title_column_size),
       column-gutter: 10pt,
-      row-gutter: 50pt,
+      row-gutter: 20pt,
       image(univ_logo, width: univ_logo_scale),
       text(title_font_size, title + "\n\n") + 
       text(authors_font_size, emph(authors) + departments),
@@ -449,8 +449,8 @@ The Choropleth map contains several variables: population distribution \(quantit
 
 = Implementation
 <implementation>
-== Data
-<data>
+== Data Sources
+<data-sources>
 - Weekly counts of population data by planning area were obtained from the Singapore Department of Statistics. The data includes the total population, age groups, and planning areas for each year. Data Source from \(#link("https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data")[Singapore Department of Statistics];)
 - The geospatial data for the planning areas was obtained from the Master Plan 2019 Planning Area Boundary KML file. Data Source from \(#link("https://www.ura.gov.sg/maps/#master-plan")[Urban Redevelopment Authority \(URA)];)
 
@@ -477,7 +477,9 @@ supplement: "Figure",
 
 = Further Suggestions for Interactivity
 <further-suggestions-for-interactivity>
-Implementing dynamic UI updates such as changing the map title or legend based on the selected age group or year. Use 'shinycssloaders' to show loading animations while data is being processed or the map is being updated. Additionally, we could also provide options for users to download filtered data and visualizations as images or CSV files would add significant value to the user experience.
+We propose implementing dynamic UI updates, such as changing the map title or legend based on the selected age group or year. Additionally, using 'shinycssloaders' will provide loading animations while data is being processed or the map is being updated. Furthermore, offering options for users to download filtered data and visualizations as images or CSV files would significantly enhance the user experience.
+
+Another recommendation is to implement conditional highlighting on the map based on user-defined criteria, such as highlighting areas with population growth above a certain percentage or areas with a high density of elderly residents. Finally, integrating a time slider with play/pause controls would allow users to see changes over time automatically, providing a more interactive and informative experience.
 
 = Conclusion
 <conclusion>
@@ -487,8 +489,10 @@ The plot can effectively communicate the relationship between the population den
 <references>
 + Arnold, M., Goldschmitt, M., & Rigotti, T. \(2023, June 21). Dealing with information overload: A comprehensive review. Frontiers in psychology. https:\/\/www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
 
++ Department of Statistics Singapore. \(2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex \(June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) \[Data set\]. https:\/\/www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+
 + Okabe, M., & Ito, K. \(2008). Color Universal Design \(CUD): How to make figures and presentations that are friendly to Colorblind people. https:\/\/jfly.uni-koeln.de/color/
 
 + Singapore Department of Statistics. \(2023). Population Trends 2023. https:\/\/www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
 
-+ Department of Statistics Singapore. \(2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex \(June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) \[Data set\]. https:\/\/www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
++ Urban Redevelopment Authority \(URA). \(2019). Master Plan 2019 Planning Area Boundary KML. https:\/\/www.ura.gov.sg/maps/\#master-plan

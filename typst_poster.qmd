@@ -222,10 +222,11 @@ The Choropleth map contains several variables: population distribution (quantita
 
 # Implementation
 
-## Data
+## Data Sources
 
 -   Weekly counts of population data by planning area were obtained from the Singapore Department of Statistics. The data includes the total population, age groups, and planning areas for each year. Data Source from ([Singapore Department of Statistics](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data))
 -   The geospatial data for the planning areas was obtained from the Master Plan 2019 Planning Area Boundary KML file. Data Source from ([Urban Redevelopment Authority (URA)](https://www.ura.gov.sg/maps/#master-plan))
+
 
 ## Software
 
@@ -240,7 +241,9 @@ The Choropleth map contains several variables: population distribution (quantita
 
 # Further Suggestions for Interactivity
 
-Implementing dynamic UI updates such as changing the map title or legend based on the selected age group or year. Use 'shinycssloaders' to show loading animations while data is being processed or the map is being updated. Additionally, we could also provide options for users to download filtered data and visualizations as images or CSV files would add significant value to the user experience.
+We propose implementing dynamic UI updates, such as changing the map title or legend based on the selected age group or year. Additionally, using 'shinycssloaders' will provide loading animations while data is being processed or the map is being updated. Furthermore, offering options for users to download filtered data and visualizations as images or CSV files would significantly enhance the user experience.
+
+Another recommendation is to implement conditional highlighting on the map based on user-defined criteria, such as highlighting areas with population growth above a certain percentage or areas with a high density of elderly residents. Finally, integrating a time slider with play/pause controls would allow users to see changes over time automatically, providing a more interactive and informative experience.
 
 # Conclusion
 
@@ -250,8 +253,11 @@ The plot can effectively communicate the relationship between the population den
 
 1.  Arnold, M., Goldschmitt, M., & Rigotti, T. (2023, June 21). Dealing with information overload: A comprehensive review. Frontiers in psychology. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10322198/
 
-2.  Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. https://jfly.uni-koeln.de/color/
+2.  Department of Statistics Singapore. (2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) \[Data set\]. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
 
-3.  Singapore Department of Statistics. (2023). Population Trends 2023. https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
+3.  Okabe, M., & Ito, K. (2008). Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. https://jfly.uni-koeln.de/color/
 
-4.  Department of Statistics Singapore. (2000 - 2023). Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex (June 2000-2010, June 2011-2020, June 2021, June 2022, June 2023) \[Data set\]. https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data
+4.  Singapore Department of Statistics. (2023). Population Trends 2023. https://www.singstat.gov.sg/-/media/files/publications/population/population2023.ashx
+
+5.  Urban Redevelopment Authority (URA). (2019). Master Plan 2019 Planning Area Boundary KML. https://www.ura.gov.sg/maps/#master-plan
+

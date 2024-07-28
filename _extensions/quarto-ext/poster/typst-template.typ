@@ -66,7 +66,7 @@
   body
 ) = {
   // Set the body font.
-  set text(font: "STIX Two Text", size: 20pt)
+  set text(font: "STIX Two Text", size: 18pt)
   let sizes = size.split("x")
   let width = int(sizes.at(0)) * 1in
   let height = int(sizes.at(1)) * 1in
@@ -164,7 +164,7 @@
       rows: 2,
       columns: (univ_logo_column_size, title_column_size),
       column-gutter: 10pt,
-      row-gutter: 50pt,
+      row-gutter: 20pt,
       image(univ_logo, width: univ_logo_scale),
       text(title_font_size, title + "\n\n") + 
       text(authors_font_size, emph(authors) + departments),
